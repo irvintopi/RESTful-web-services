@@ -10,6 +10,9 @@ import java.util.List;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
-    @Query(value = "SELECT flight_id FROM new_db.booking_flight WHERE booking_id = :id", nativeQuery = true)
+    @Query(value = "SELECT flight_id FROM jpa_exercise_db.booking_flight WHERE booking_id = :id", nativeQuery = true)
     List<Integer> findAllById(@Param("id") Integer id);
+
+    @Query("SELECT b FROM Booking b JOIN b.flights f WHERE f.id = :flightId")
+    List<Booking> findByFlightId(@Param("flightId") Integer flightId);
 }

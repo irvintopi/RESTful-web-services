@@ -7,8 +7,6 @@ import com.lhind.RESTfulwebservices.services.BookingService;
 import com.lhind.RESTfulwebservices.services.FlightService;
 import org.springframework.stereotype.Service;
 
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +40,10 @@ public class BookingServiceImpl implements BookingService {
         }
 
         return new BookingDTO(b.getUser().getUserName(), b.getStatus(), b.getBookingDate());
+    }
+    @Override
+    public List<Booking> findByFlightId(Integer flight_id) {
+        return bookingRepository.findByFlightId(flight_id);
     }
 
     @Override
