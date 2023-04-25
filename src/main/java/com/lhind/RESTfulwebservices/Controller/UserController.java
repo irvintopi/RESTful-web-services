@@ -1,5 +1,6 @@
 package com.lhind.RESTfulwebservices.Controller;
 
+import com.lhind.RESTfulwebservices.dto.BookingDTO;
 import com.lhind.RESTfulwebservices.dto.UserDTO;
 import com.lhind.RESTfulwebservices.model.Booking;
 import com.lhind.RESTfulwebservices.model.User;
@@ -7,9 +8,12 @@ import com.lhind.RESTfulwebservices.model.UserDetails;
 import com.lhind.RESTfulwebservices.services.BookingService;
 import com.lhind.RESTfulwebservices.services.UserDetailsService;
 import com.lhind.RESTfulwebservices.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,8 +86,9 @@ public class UserController {
 
         return user1;
     }
-    @PutMapping("/update/{id}")
-    public User updateUser(@PathVariable Integer id, @RequestBody User user) {
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/update/{id}")
+    public void updateUser(@PathVariable Integer id, @RequestBody User user) {
         User userToUpdate = userService.findById(id);
         if (user == null) {
             throw new IllegalArgumentException("User cannot be null");
@@ -93,15 +98,15 @@ public class UserController {
         userToUpdate.setPassword(user.getPassword());
         userToUpdate.setRole(user.getRole());
 
-        UserDetails userDetails = userToUpdate.getUserDetails();
+        UserDetails userDetails= userToUpdate.getUserDetails();
         userDetails.setFirstName(user.getUserDetails().getFirstName());
         userDetails.setLastName(user.getUserDetails().getLastName());
         userDetails.setEmail(user.getUserDetails().getEmail());
         userDetails.setPhoneNumber(user.getUserDetails().getPhoneNumber());
 
-        userService.save(userToUpdate);
+        userToUpdate.setUserDetails(userDetails);
 
-        return userToUpdate;
+        userService.save(userToUpdate);
     }
 
 

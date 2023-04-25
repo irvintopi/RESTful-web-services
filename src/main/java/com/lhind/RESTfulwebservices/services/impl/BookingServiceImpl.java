@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -26,8 +27,9 @@ public class BookingServiceImpl implements BookingService {
     public Optional<Booking> findById(Integer id){
         return bookingRepository.findById(id);
     }
-    public List<Booking> findAll(){
-        return bookingRepository.findAll();
+    public List<BookingDTO> findAll(){
+        List<BookingDTO> BookingDTOs= bookingRepository.findAll().stream().map(this::converter).collect(Collectors.toList());
+        return BookingDTOs;
     }
     public void delete(Booking u){
         bookingRepository.delete(u);

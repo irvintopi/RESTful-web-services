@@ -1,5 +1,6 @@
 package com.lhind.RESTfulwebservices.services;
 
+import com.lhind.RESTfulwebservices.dto.BookingDTO;
 import com.lhind.RESTfulwebservices.dto.UserDTO;
 import com.lhind.RESTfulwebservices.model.Booking;
 import com.lhind.RESTfulwebservices.model.User;
@@ -16,8 +17,8 @@ public interface UserService {
     UserDTO findUserByBookings(Booking b);
 
     UserDTO findAllByUserDetails(UserDetails ud);
-    List<Integer> findAllBookings(Integer id);
-    List<Integer> findAllFlights(int id);
+    List<BookingDTO> findAllBookings(Integer id);
+
 
 
 }

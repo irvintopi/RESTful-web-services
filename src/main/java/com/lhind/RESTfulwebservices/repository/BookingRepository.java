@@ -1,6 +1,7 @@
 package com.lhind.RESTfulwebservices.repository;
 
 import com.lhind.RESTfulwebservices.model.Booking;
+import com.lhind.RESTfulwebservices.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,4 +16,6 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
 
     @Query("SELECT b FROM Booking b JOIN b.flights f WHERE f.id = :flightId")
     List<Booking> findByFlightId(@Param("flightId") Integer flightId);
+
+
 }

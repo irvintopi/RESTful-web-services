@@ -1,5 +1,6 @@
 package com.lhind.RESTfulwebservices.services.impl;
 
+import com.lhind.RESTfulwebservices.dto.BookingDTO;
 import com.lhind.RESTfulwebservices.dto.UserDTO;
 import com.lhind.RESTfulwebservices.model.Booking;
 import com.lhind.RESTfulwebservices.model.User;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -77,13 +79,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Integer> findAllBookings(Integer id) {
-        return userRepository.findAllById(id);
+    public List<BookingDTO> findAllBookings(Integer id) {
+        List<Integer> bookingIds = userRepository.findAllBookingsOfAUser(id);
+        List<BookingDTO> bookingDtoList = new ArrayList<>();
+        for (Integer i:bookingIds) {
+            Optional<Booking> bookingOptional = bookingService.findById(i);
+
+            if (bookingOptional.isPresent()) {
+                BookingDTO bookingDto = bookingService.converter(bookingOptional.get());
+                bookingDtoList.add(bookingDto);
+            }
+        }
+        return bookingDtoList;
     }
 
-    @Override
-    public List<Integer> findAllFlights(int id) {
-        return userRepository.findAllById(id);
-    }
+
 
 }

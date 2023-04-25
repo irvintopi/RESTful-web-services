@@ -1,4 +1,5 @@
 package com.lhind.RESTfulwebservices.model;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class User {
 
     @Column
     private String role;
+
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "theUser")
     private UserDetails userDetails;
 

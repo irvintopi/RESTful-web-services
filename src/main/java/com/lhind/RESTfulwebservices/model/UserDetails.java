@@ -1,5 +1,7 @@
 package com.lhind.RESTfulwebservices.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -9,6 +11,7 @@ public class UserDetails {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @OneToOne
     @JoinColumn(nullable = false, unique = true, name = "user_id", referencedColumnName = "id")
     private User theUser;
