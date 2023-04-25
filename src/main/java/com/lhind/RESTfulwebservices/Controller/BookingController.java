@@ -1,9 +1,11 @@
 package com.lhind.RESTfulwebservices.Controller;
 
 import com.lhind.RESTfulwebservices.dto.BookingDTO;
+import com.lhind.RESTfulwebservices.dto.FlightDTO;
 import com.lhind.RESTfulwebservices.model.Booking;
 import com.lhind.RESTfulwebservices.services.BookingService;
 import com.lhind.RESTfulwebservices.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,11 +40,21 @@ public class BookingController {
         List<BookingDTO> bookingDTOS = userService.findAllBookings(id);
         return bookingDTOS;
     }
+    @RequestMapping(method = RequestMethod.GET ,value = "/{id}/flights")
+    public List<Integer> getFlightsOfABooking(@PathVariable(name = "id") Integer id){
+        Optional<Booking> bookingOptional = bookingService.findById(id);
 
+        bookingOptional.ifPresent(booking -> bookingService.findById(id));
+
+        List<Integer> flightDtoList = bookingService.findAllFlights(id);
+        return flightDtoList;
+    }
     @RequestMapping(method = RequestMethod.POST, value = "/add")
     public void add() {
-
+        Booking booking = new Booking();
+        booking = bookingService.save(booking);
     }
+
 
     @RequestMapping(method =RequestMethod.DELETE, value = "/delete/{id}")
     public void delete(@PathVariable Integer id) {
