@@ -69,19 +69,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Integer id) {
         Optional <User> user = userRepository.findById(id);
-        if (user.isPresent()){
-            User user1 = user.get();
-            return user1;
-        }
-        else {
-            return null;
-        }
+        return user.orElse(null);
     }
 
     @Override
     public List<UserDTO> findAll() {
-        List<UserDTO> userDTOs = userRepository.findAll().stream().map(this::converter).collect(Collectors.toList());
-        return userDTOs;
+        return userRepository.findAll().stream().map(this::converter).collect(Collectors.toList());
     }
 
 
@@ -97,25 +90,10 @@ public class UserServiceImpl implements UserService {
         }
         return userMapper.toDto(u);
     }
-
-    @Override
-    public UserDTO findUserByBookings(Booking b) {
-        User user = userRepository.findUserByBookings(b);
-        return userMapper.toDto(user);
-    }
-
-    @Override
-    public UserDTO findAllByUserDetails(UserDetails ud) {
-        User user = userRepository.findAllByUserDetails(ud);
-        return userMapper.toDto(user);
-    }
     @Override
     public BookingDTO findBookingByIdAndUser(Integer bookingId, Integer id){
         Optional<Booking> booking = bookingService.findById(userRepository.findBookingByIdAndUser(bookingId, id));
-        if (booking.isPresent()){
-            BookingDTO bookingDTO = bookingMapper.toDto(booking.get());
-            return bookingDTO;
-        }else return null;
+        return booking.map(value -> bookingMapper.toDto(value)).orElse(null);
     }
     @Override
     public List<BookingDTO> findAllBookings(Integer id) {

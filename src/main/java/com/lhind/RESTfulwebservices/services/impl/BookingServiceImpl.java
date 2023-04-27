@@ -46,8 +46,7 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepository.findById(id);
     }
     public List<BookingDTO> findAll(){
-        List<BookingDTO> BookingDTOs= bookingRepository.findAll().stream().map(this::converter).collect(Collectors.toList());
-        return BookingDTOs;
+        return bookingRepository.findAll().stream().map(this::converter).collect(Collectors.toList());
     }
     public void delete(Booking u){
         bookingRepository.delete(u);
@@ -72,10 +71,7 @@ public class BookingServiceImpl implements BookingService {
         List<FlightDTO> flights = new ArrayList<>();
 
         for (Integer flightId : flightIds) {
-            Flight flight = flightService.findById(flightId).orElse(null);
-            if (flight != null) {
-                flights.add(flightMapper.toDto(flight));
-            }
+            flightService.findById(flightId).ifPresent(flight -> flights.add(flightMapper.toDto(flight)));
         }
 
         return flights;

@@ -16,21 +16,26 @@ import java.util.Optional;
 public class FlightServiceImpl implements FlightService {
 
     private FlightRepository flightRepository;
-    private FlightDTO flightDTO;
+
     private FlightMapper flightMapper;
 
-    FlightServiceImpl(FlightRepository flightRepository, FlightDTO flightDTO, FlightMapper flightMapper){
+    FlightServiceImpl(FlightRepository flightRepository, FlightMapper flightMapper){
         this.flightRepository = flightRepository;
-        this.flightDTO = flightDTO;
         this.flightMapper = flightMapper;
     }
 
-    public Flight save(Flight f) { return flightRepository.save(f); }
+    @Override
+    public FlightDTO save(Flight f) {
+        flightRepository.save(f);
+        return flightMapper.toDto(f);
+    }
 
+    @Override
     public Optional<Flight> findById(Integer id) {
         return flightRepository.findById(id);
     }
 
+    @Override
     public List<FlightDTO> findAll() {
         List<Flight> flights = flightRepository.findAll();
         List<FlightDTO> flightDTOs = new ArrayList<>();
@@ -40,9 +45,8 @@ public class FlightServiceImpl implements FlightService {
         return flightDTOs;
     }
 
+    @Override
     public void delete(Flight f) { flightRepository.delete(f); }
-
-
 
     @Override
     public List<Integer> findAllBookings(Integer id) {

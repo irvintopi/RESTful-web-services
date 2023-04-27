@@ -56,14 +56,14 @@ public class BookingController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/add")
-    public BookingDTO add(@RequestBody Booking booking) {
+    public BookingDTO addBooking(@RequestBody Booking booking) {
         bookingService.save(booking);
         return bookingMapper.toDto(booking);
     }
 
 
     @RequestMapping(method =RequestMethod.DELETE, value = "/delete/{id}")
-    public void delete(@PathVariable Integer id) {
+    public void deleteBooking(@PathVariable Integer id) {
         Optional<Booking> bookingOptional = bookingService.findById(id);
 
         bookingOptional.ifPresent(booking -> bookingService.delete(booking));

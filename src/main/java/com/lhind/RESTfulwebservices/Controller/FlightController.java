@@ -7,10 +7,8 @@ import com.lhind.RESTfulwebservices.services.BookingService;
 import com.lhind.RESTfulwebservices.services.FlightService;
 import com.lhind.RESTfulwebservices.services.UserService;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -38,12 +36,21 @@ public class FlightController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public FlightDTO findById(@PathVariable("id") Integer id){
-         FlightDTO flightDTO = flightMapper.toDto(flightService.findById(id).get());
-        return flightDTO;
+        return flightMapper.toDto(flightService.findById(id).get());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{date}/{airport}")
     public FlightDTO findFlightByDateAndAirport(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date, @PathVariable("airport") String airport){
         return flightMapper.toDto(flightService.findByDateAndAirport(date, airport));
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/add")
+    public ResponseEntity<FlightDTO> saveNewFlight(@RequestBody Flight flight) {
+        return ResponseEntity.ok(flightService.save(flight));
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/delete/{id}")
+    public void delete(@PathVariable("id") Integer id){
+        flightService.delete(flightService.findById(id).get());
     }
 }

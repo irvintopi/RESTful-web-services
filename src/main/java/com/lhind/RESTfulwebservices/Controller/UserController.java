@@ -1,20 +1,15 @@
 package com.lhind.RESTfulwebservices.Controller;
 
-import com.lhind.RESTfulwebservices.dto.BookingDTO;
 import com.lhind.RESTfulwebservices.dto.UserDTO;
 import com.lhind.RESTfulwebservices.mapper.UserMapper;
 import com.lhind.RESTfulwebservices.model.Booking;
 import com.lhind.RESTfulwebservices.model.User;
-import com.lhind.RESTfulwebservices.model.UserDetails;
 import com.lhind.RESTfulwebservices.services.BookingService;
 import com.lhind.RESTfulwebservices.services.UserDetailsService;
 import com.lhind.RESTfulwebservices.services.UserService;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +47,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
 
     @RequestMapping(method = RequestMethod.GET, value = "/flights/{flightId}")
     public List<UserDTO> getUsersByFlightId(@PathVariable Integer flightId) {
