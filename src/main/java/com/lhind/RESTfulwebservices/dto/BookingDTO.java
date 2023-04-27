@@ -1,6 +1,7 @@
 package com.lhind.RESTfulwebservices.dto;
 
 
+import com.lhind.RESTfulwebservices.model.Flight;
 import org.springframework.stereotype.Component;
 
 
@@ -8,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 @Component
 public class BookingDTO {
+
     private String userName;
     private String status;
     private Date bookingDate;

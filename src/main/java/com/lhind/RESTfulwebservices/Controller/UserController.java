@@ -2,6 +2,7 @@ package com.lhind.RESTfulwebservices.Controller;
 
 import com.lhind.RESTfulwebservices.dto.BookingDTO;
 import com.lhind.RESTfulwebservices.dto.UserDTO;
+import com.lhind.RESTfulwebservices.mapper.UserMapper;
 import com.lhind.RESTfulwebservices.model.Booking;
 import com.lhind.RESTfulwebservices.model.User;
 import com.lhind.RESTfulwebservices.model.UserDetails;
@@ -27,10 +28,13 @@ public class UserController {
 
     BookingService bookingService;
 
-    UserController(UserService userService, UserDetailsService userDetailsService, BookingService bookingService){
+    UserMapper userMapper;
+
+    UserController(UserService userService, UserDetailsService userDetailsService, BookingService bookingService, UserMapper userMapper){
         this.userService = userService;
         this.userDetailsService = userDetailsService;
         this.bookingService= bookingService;
+        this.userMapper= userMapper;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -42,21 +46,20 @@ public class UserController {
     public ResponseEntity<UserDTO> getUserById(@PathVariable("id") Integer id) {
         User user1 = userService.findById(id);
         if (user1 != null) {
-            UserDTO userDTO = userService.converter(user1);
+            UserDTO userDTO = userMapper.toDto(user1);
             return new ResponseEntity<>(userDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-
     @RequestMapping(method = RequestMethod.GET, value = "/flights/{flightId}")
-    public List<UserDTO> getUserByFlightId(@PathVariable Integer flightId) {
+    public List<UserDTO> getUsersByFlightId(@PathVariable Integer flightId) {
         List<Booking> bookings = bookingService.findByFlightId(flightId);
         List<UserDTO> userDTOs = new ArrayList<>();
         for (Booking booking : bookings) {
             User user = userService.findById(booking.getUser().getId());
-            UserDTO userDto = userService.converter(user);
+            UserDTO userDto = userMapper.toDto(user);
             userDTOs.add(userDto);
         }
         return userDTOs;
@@ -68,46 +71,17 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = {"/add"})
-    public User createUser(@RequestBody User user) {
-        User user1= new User();
-        user1.setUserName(user.getUserName());
-        user1.setPassword(user.getPassword());
-        user1.setRole(user.getRole());
-
-        UserDetails userDetails = new UserDetails();
-        userDetails.setFirstName(user.getUserDetails().getFirstName());
-        userDetails.setLastName(user.getUserDetails().getLastName());
-        userDetails.setEmail(user.getUserDetails().getEmail());
-        userDetails.setPhoneNumber(user.getUserDetails().getPhoneNumber());
-        userDetails.setUser(user1);
-
-        userService.save(user1);
-        userDetailsService.save(userDetails);
-
-        return user1;
+    public UserDTO createUser(@RequestBody User user) {
+        userService.save(user);
+        return userMapper.toDto(user);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/update/{id}")
-    public void updateUser(@PathVariable Integer id, @RequestBody User user) {
-        User userToUpdate = userService.findById(id);
-        if (user == null) {
-            throw new IllegalArgumentException("User cannot be null");
-        }
-
-        userToUpdate.setUserName(user.getUserName());
-        userToUpdate.setPassword(user.getPassword());
-        userToUpdate.setRole(user.getRole());
-
-        UserDetails userDetails= userToUpdate.getUserDetails();
-        userDetails.setFirstName(user.getUserDetails().getFirstName());
-        userDetails.setLastName(user.getUserDetails().getLastName());
-        userDetails.setEmail(user.getUserDetails().getEmail());
-        userDetails.setPhoneNumber(user.getUserDetails().getPhoneNumber());
-
-        userToUpdate.setUserDetails(userDetails);
-
-        userService.save(userToUpdate);
+    public UserDTO updateUser(@PathVariable Integer id, @RequestBody User updatedUser) {
+        User savedUser = userService.update(id, updatedUser);
+        return userMapper.toDto(savedUser);
     }
+
 
 
 }

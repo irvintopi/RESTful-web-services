@@ -1,5 +1,6 @@
 package com.lhind.RESTfulwebservices.repository;
 
+import com.lhind.RESTfulwebservices.dto.BookingDTO;
 import com.lhind.RESTfulwebservices.model.Booking;
 import com.lhind.RESTfulwebservices.model.User;
 import com.lhind.RESTfulwebservices.model.UserDetails;
@@ -23,5 +24,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     /*public List<Integer> findAllById(@Param("bookingId") int id);*/
     @Query(value = "SELECT id FROM booking WHERE user_id = :id", nativeQuery = true)
     public List<Integer> findAllBookingsOfAUser(@Param("id") Integer id);
+
+    @Query(value = "SELECT id FROM booking WHERE user_id = :userId AND id = :bookingId", nativeQuery = true)
+    public Integer findBookingByIdAndUser(@Param("bookingId") Integer bookingId, @Param("userId") Integer userId);
 
 }

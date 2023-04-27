@@ -30,6 +30,7 @@ public class Booking {
             joinColumns = @JoinColumn(name = "booking_id"),
             inverseJoinColumns = @JoinColumn(name = "flight_id"))
     private List<Flight> flights;
+
     public Integer getId() {
         return id;
     }

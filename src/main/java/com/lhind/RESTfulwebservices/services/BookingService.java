@@ -1,13 +1,14 @@
 package com.lhind.RESTfulwebservices.services;
 
 import com.lhind.RESTfulwebservices.dto.BookingDTO;
+import com.lhind.RESTfulwebservices.dto.FlightDTO;
 import com.lhind.RESTfulwebservices.model.Booking;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface BookingService {
-    public Booking save(Booking b);
+   Booking save(Booking b);
     public Optional<Booking> findById(Integer id);
     public List<BookingDTO> findAll();
     public void delete(Booking u);
@@ -15,6 +16,6 @@ public interface BookingService {
 
     List<Booking> findByFlightId(Integer flight_id);
 
-    List<Integer> findAllFlights(Integer id);
+    List<FlightDTO> findAllFlights(Integer id);
 
 }

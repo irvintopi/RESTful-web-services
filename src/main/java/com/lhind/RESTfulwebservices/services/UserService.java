@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface UserService {
     User save(User u);
+    User update(Integer id, User updatedUser);
     User findById(Integer id);
     List<UserDTO> findAll();
     void delete(User u);
@@ -18,7 +19,7 @@ public interface UserService {
 
     UserDTO findAllByUserDetails(UserDetails ud);
     List<BookingDTO> findAllBookings(Integer id);
-
+    BookingDTO findBookingByIdAndUser(Integer bookingId, Integer id);
 
 
 }

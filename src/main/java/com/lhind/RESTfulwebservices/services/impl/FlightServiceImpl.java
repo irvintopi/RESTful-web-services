@@ -33,14 +33,7 @@ public class FlightServiceImpl implements FlightService {
 
     public void delete(Flight f) { flightRepository.delete(f); }
 
-    @Override
-    public FlightDTO converter(Flight f) {
-        if (f == null) {
-            return null;
-        }
-        FlightDTO flightDTO = new FlightDTO(f.getAirline(), f.getOrigin(), f.getDestination(), f.getStatus(), f.getDepartureDate(), f.getArrivalDate());
-        return flightDTO;
-    }
+
 
     @Override
     public List<Integer> findAllBookings(Integer id) {

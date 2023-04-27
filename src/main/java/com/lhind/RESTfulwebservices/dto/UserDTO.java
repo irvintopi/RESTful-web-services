@@ -7,6 +7,8 @@ import java.util.List;
 @Component
 public class UserDTO {
     private String userName;
+
+    private String password;
     private String firstName;
     private String lastName;
     private String role;
@@ -29,6 +31,14 @@ public class UserDTO {
 
     public String getUserName() {
         return userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setUserName(String userName) {

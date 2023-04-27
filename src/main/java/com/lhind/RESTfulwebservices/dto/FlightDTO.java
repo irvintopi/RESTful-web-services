@@ -13,6 +13,7 @@ public class FlightDTO {
     private String status;
     private Date departureDate;
     private Date arrivalDate;
+    private Integer flightNumber;
     private List<Integer> bookingIds;
 
     public FlightDTO() {
@@ -25,6 +26,14 @@ public class FlightDTO {
         this.status = status;
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
+    }
+
+    public Integer getFlightNumber() {
+        return flightNumber;
+    }
+
+    public void setFlightNumber(Integer flightNumber) {
+        this.flightNumber = flightNumber;
     }
 
     public String getAirline() {
