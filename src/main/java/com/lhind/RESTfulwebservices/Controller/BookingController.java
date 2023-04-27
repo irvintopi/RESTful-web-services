@@ -6,11 +6,8 @@ import com.lhind.RESTfulwebservices.mapper.BookingMapper;
 import com.lhind.RESTfulwebservices.model.Booking;
 import com.lhind.RESTfulwebservices.services.BookingService;
 import com.lhind.RESTfulwebservices.services.UserService;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.xpath.XPathVariableResolver;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
