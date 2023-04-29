@@ -1,11 +1,15 @@
 package com.lhind.RESTfulwebservices.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.ToString;
+
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "flight")
+@ToString
 public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -108,17 +112,4 @@ public class Flight {
         this.bookings = bookings;
     }
 
-    @Override
-    public String toString() {
-        return "FlightRepository{" +
-                "id=" + id +
-                ", origin='" + origin + '\'' +
-                ", destination='" + destination + '\'' +
-                ", airline='" + airline + '\'' +
-                ", flightNumber=" + flightNumber +
-                ", departureDate=" + departureDate +
-                ", arrivalDate=" + arrivalDate +
-                ", status='" + status + '\'' +
-                '}';
-    }
 }

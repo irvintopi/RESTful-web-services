@@ -17,5 +17,4 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
     @Query("SELECT b FROM Booking b JOIN b.flights f WHERE f.id = :flightId")
     List<Booking> findByFlightId(@Param("flightId") Integer flightId);
 
-
 }

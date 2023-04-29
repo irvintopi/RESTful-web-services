@@ -5,6 +5,7 @@ import com.lhind.RESTfulwebservices.mapper.FlightMapper;
 import com.lhind.RESTfulwebservices.model.Flight;
 import com.lhind.RESTfulwebservices.repository.FlightRepository;
 import com.lhind.RESTfulwebservices.services.FlightService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,16 +14,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class FlightServiceImpl implements FlightService {
 
     private FlightRepository flightRepository;
 
     private FlightMapper flightMapper;
-
-    FlightServiceImpl(FlightRepository flightRepository, FlightMapper flightMapper){
-        this.flightRepository = flightRepository;
-        this.flightMapper = flightMapper;
-    }
 
     @Override
     public FlightDTO save(Flight f) {
@@ -47,16 +44,6 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public void delete(Flight f) { flightRepository.delete(f); }
-
-    @Override
-    public List<Integer> findAllBookings(Integer id) {
-        return null;
-    }
-
-    @Override
-    public List<Integer> findAllUsers(int id) {
-        return null;
-    }
 
     @Override
     public Flight findByDateAndAirport(Date date, String airport) {

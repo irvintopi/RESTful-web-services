@@ -2,12 +2,15 @@ package com.lhind.RESTfulwebservices.model;
 
 
 import jakarta.persistence.*;
+import lombok.ToString;
+
 import java.util.Date;
 import java.util.List;
 import java.util.stream.*;
 
 @Entity
 @Table(name = "booking")
+@ToString
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,21 +72,5 @@ public class Booking {
 
     public void setFlights(List<Flight> flights) {
         this.flights = flights;
-    }
-
-    public String printFlights(){
-        return flights.stream()
-                .map(f -> "{FlightRepository #" + f.getId() + ": id=" + f.getId() + ", airline=" + f.getAirline() + "}")
-                .collect(Collectors.joining(" "));
-    }
-
-    @Override
-    public String toString() {
-        return "BookingRepository{" +
-                "id=" + id +
-                ", bookingDate=" + bookingDate +
-                ", status='" + status + '\'' +
-                ", user id=" + user.getId()+ ", username=" + user.getUserName() +
-                ","+printFlights();
     }
 }

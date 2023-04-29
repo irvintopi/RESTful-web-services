@@ -12,8 +12,5 @@ public interface FlightService {
     Optional<Flight> findById(Integer id);
     List<FlightDTO> findAll();
     void delete(Flight f);
-    List<Integer> findAllBookings(Integer id);
-    List<Integer> findAllUsers(int id);
-
     Flight findByDateAndAirport(Date date, String airport);
 }

@@ -1,11 +1,15 @@
 package com.lhind.RESTfulwebservices.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 
 @Entity
 @Table
+@ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,16 +77,5 @@ public class User {
 
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
-                ", userDetails: first name=" + userDetails.getFirstName() + ", last name="+ userDetails.getLastName() + ", email="+ userDetails.getEmail() + ", phone number="+ userDetails.getPhoneNumber() +
-                '}';
     }
 }

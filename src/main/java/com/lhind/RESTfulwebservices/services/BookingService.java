@@ -9,13 +9,10 @@ import java.util.Optional;
 
 public interface BookingService {
    Booking save(Booking b);
-    public Optional<Booking> findById(Integer id);
-    public List<BookingDTO> findAll();
-    public void delete(Booking u);
-    BookingDTO converter(Booking b);
-
-    List<Booking> findByFlightId(Integer flight_id);
-
-    List<FlightDTO> findAllFlights(Integer id);
+   Optional<Booking> findById(Integer id);
+   List<BookingDTO> findAll();
+   void delete(Booking u);
+   List<Booking> findByFlightId(Integer flight_id);
+   List<FlightDTO> findAllFlights(Integer id);
 
 }

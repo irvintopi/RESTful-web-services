@@ -11,6 +11,7 @@ import com.lhind.RESTfulwebservices.repository.UserDetailsRepository;
 import com.lhind.RESTfulwebservices.repository.UserRepository;
 import com.lhind.RESTfulwebservices.services.BookingService;
 import com.lhind.RESTfulwebservices.services.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -20,22 +21,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
+
     private UserRepository userRepository;
     private BookingService bookingService;
-
     private UserDetailsRepository userDetailsRepository;
-
     private UserMapper userMapper;
     private BookingMapper bookingMapper;
-
-    UserServiceImpl(UserRepository userRepository, BookingService bookingService, UserDetailsRepository userDetailsRepository, UserMapper userMapper, BookingMapper bookingMapper) {
-        this.userRepository = userRepository;
-        this.bookingService = bookingService;
-        this.userDetailsRepository = userDetailsRepository;
-        this.userMapper = userMapper;
-        this.bookingMapper= bookingMapper;
-    }
 
 
     @Override
@@ -120,6 +113,7 @@ public class UserServiceImpl implements UserService {
         }
         return bookingDtoList;
     }
+
 
 
 

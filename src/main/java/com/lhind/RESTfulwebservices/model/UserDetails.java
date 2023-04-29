@@ -1,9 +1,11 @@
 package com.lhind.RESTfulwebservices.model;
 
 import jakarta.persistence.*;
+import lombok.ToString;
 
 @Entity
 @Table(name = "user_details")
+@ToString
 public class UserDetails {
     @Id
     @Column
@@ -62,14 +64,4 @@ public class UserDetails {
         this.theUser = user;
     }
 
-    @Override
-    public String toString() {
-        return "UserDetails{" +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", user=" + theUser.getId() +
-                '}';
-    }
 }

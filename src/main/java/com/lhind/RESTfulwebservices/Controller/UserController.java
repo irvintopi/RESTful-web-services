@@ -7,6 +7,7 @@ import com.lhind.RESTfulwebservices.model.User;
 import com.lhind.RESTfulwebservices.services.BookingService;
 import com.lhind.RESTfulwebservices.services.UserDetailsService;
 import com.lhind.RESTfulwebservices.services.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,20 +17,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@AllArgsConstructor
 public class UserController {
+
     UserService userService;
     UserDetailsService userDetailsService;
-
     BookingService bookingService;
-
     UserMapper userMapper;
-
-    UserController(UserService userService, UserDetailsService userDetailsService, BookingService bookingService, UserMapper userMapper){
-        this.userService = userService;
-        this.userDetailsService = userDetailsService;
-        this.bookingService= bookingService;
-        this.userMapper= userMapper;
-    }
 
     //get all users and details
     @RequestMapping(method = RequestMethod.GET)
