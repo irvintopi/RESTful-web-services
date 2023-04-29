@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService {
         this.bookingMapper= bookingMapper;
     }
 
+
     @Override
     public User save(User user) {
         User user1 = new User();
@@ -65,7 +66,17 @@ public class UserServiceImpl implements UserService {
                 })
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
-
+    @Override
+    public List<UserDTO> findUsersOnFlight(Integer flightId) {
+        List<Booking> bookings = bookingService.findByFlightId(flightId);
+        List<UserDTO> userDTOs = new ArrayList<>();
+        for (Booking booking : bookings) {
+            User user = userRepository.findById(booking.getUser().getId()).get();
+            UserDTO userDto = userMapper.toDto(user);
+            userDTOs.add(userDto);
+        }
+        return userDTOs;
+    }
     @Override
     public User findById(Integer id) {
         Optional <User> user = userRepository.findById(id);

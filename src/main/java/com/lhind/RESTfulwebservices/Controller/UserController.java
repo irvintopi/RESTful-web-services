@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -32,11 +31,13 @@ public class UserController {
         this.userMapper= userMapper;
     }
 
+    //get all users and details
     @RequestMapping(method = RequestMethod.GET)
     public List<UserDTO> get(){
         return userService.findAll();
     }
 
+    //get user and details by id
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable("id") Integer id) {
         User user1 = userService.findById(id);
@@ -48,34 +49,29 @@ public class UserController {
         }
     }
 
-
+    //get users on a specific flight
     @RequestMapping(method = RequestMethod.GET, value = "/flights/{flightId}")
     public List<UserDTO> getUsersByFlightId(@PathVariable Integer flightId) {
-        List<Booking> bookings = bookingService.findByFlightId(flightId);
-        List<UserDTO> userDTOs = new ArrayList<>();
-        for (Booking booking : bookings) {
-            User user = userService.findById(booking.getUser().getId());
-            UserDTO userDto = userMapper.toDto(user);
-            userDTOs.add(userDto);
-        }
-        return userDTOs;
+        return userService.findUsersOnFlight(flightId);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/delete/{id}")
-    public void deleteUser(@PathVariable Integer id){
-        userService.delete(userService.findById(id));
-    }
-
+    //add new User
     @RequestMapping(method = RequestMethod.POST, value = {"/add"})
     public UserDTO createUser(@RequestBody User user) {
         userService.save(user);
         return userMapper.toDto(user);
     }
 
+    //update user
     @RequestMapping(method = RequestMethod.PUT, value = "/update/{id}")
     public UserDTO updateUser(@PathVariable Integer id, @RequestBody User updatedUser) {
         User savedUser = userService.update(id, updatedUser);
         return userMapper.toDto(savedUser);
+    }
+    //delete user
+    @RequestMapping(method = RequestMethod.DELETE, value = "/delete/{id}")
+    public void deleteUser(@PathVariable Integer id){
+        userService.delete(userService.findById(id));
     }
 
 

@@ -12,7 +12,9 @@ import com.lhind.RESTfulwebservices.repository.UserRepository;
 import com.lhind.RESTfulwebservices.services.BookingService;
 import com.lhind.RESTfulwebservices.services.FlightService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +64,11 @@ public class BookingServiceImpl implements BookingService {
     }
     @Override
     public List<Booking> findByFlightId(Integer flight_id) {
-        return bookingRepository.findByFlightId(flight_id);
+        List<Booking> bookings = bookingRepository.findByFlightId(flight_id);
+        if (bookings.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return bookings;
     }
     
     @Override
