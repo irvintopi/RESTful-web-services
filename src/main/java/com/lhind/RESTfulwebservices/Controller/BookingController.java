@@ -7,6 +7,7 @@ import com.lhind.RESTfulwebservices.model.Booking;
 import com.lhind.RESTfulwebservices.services.BookingService;
 import com.lhind.RESTfulwebservices.services.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -24,24 +25,24 @@ public class BookingController {
 
     //get all bookings sorted by date
     @RequestMapping(method = RequestMethod.GET)
-    public List<BookingDTO> get() {
+    public ResponseEntity<List<BookingDTO>> get() {
         List<BookingDTO> bookings = bookingService.findAll();
         Collections.sort(bookings, Comparator.comparing(BookingDTO::getBookingDate));
-        return bookings;
+        return ResponseEntity.ok(bookings);
     }
 
     //get specific bookings of a user
     @RequestMapping(method = RequestMethod.GET, value = "/{id}/{userId}")
-    public BookingDTO getBookingOfAUser(@PathVariable Integer id, @PathVariable Integer userId){
+    public ResponseEntity<BookingDTO> getBookingOfAUser(@PathVariable Integer id, @PathVariable Integer userId){
        BookingDTO booking = userService.findBookingByIdAndUser(id , userId);
-       return booking;
+       return ResponseEntity.ok(booking);
     }
 
     //get all bookings of a user
     @RequestMapping(method = RequestMethod.GET, value = {"/{id}"})
-    public List<BookingDTO> getAllBookingsOfUser(@PathVariable Integer id) {
-        List<BookingDTO> bookingDTOS = userService.findAllBookings(id);
-        return bookingDTOS;
+    public ResponseEntity<List<BookingDTO>> getAllBookingsOfUser(@PathVariable Integer id) {
+        List<BookingDTO> bookingDTOS = userService.findAllBookings(id); 
+        return ResponseEntity.ok(bookingDTOS);
     }
 
     //get flights of a booking
@@ -56,7 +57,7 @@ public class BookingController {
     }
 
     //add a booking
-    @RequestMapping(method = RequestMethod.POST, value = "/add")
+    @RequestMapping(method = RequestMethod.POST)
     public BookingDTO addBooking(@RequestBody Booking booking) {
         bookingService.save(booking);
         return bookingMapper.toDto(booking);

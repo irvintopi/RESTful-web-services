@@ -19,5 +19,4 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query(value = "SELECT id FROM booking WHERE user_id = :userId AND id = :bookingId", nativeQuery = true)
     Integer findBookingByIdAndUser(@Param("bookingId") Integer bookingId, @Param("userId") Integer userId);
-
 }

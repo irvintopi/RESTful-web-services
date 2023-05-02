@@ -22,8 +22,8 @@ public class FlightController {
 
     //find all flights
     @RequestMapping(method = RequestMethod.GET)
-    public List<FlightDTO> findAll(){
-     return flightService.findAll();
+    public ResponseEntity<List<FlightDTO>> findAll(){
+     return ResponseEntity.ok(flightService.findAll());
     }
 
     //find flight by ud
@@ -35,8 +35,8 @@ public class FlightController {
 
     //find flight by date and airport
     @RequestMapping(method = RequestMethod.GET, value = "/{date}/{airport}")
-    public FlightDTO findFlightByDateAndAirport(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date, @PathVariable("airport") String airport){
-        return flightMapper.toDto(flightService.findByDateAndAirport(date, airport));
+    public ResponseEntity<FlightDTO> findFlightByDateAndAirport(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date, @PathVariable("airport") String airport){
+        return ResponseEntity.ok(flightMapper.toDto(flightService.findByDateAndAirport(date, airport)));
     }
 
     //add new flight
