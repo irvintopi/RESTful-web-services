@@ -36,7 +36,7 @@ public class FlightController {
     //find flight by date and airport
     @RequestMapping(method = RequestMethod.GET, value = "/{date}/{airport}")
     public ResponseEntity<FlightDTO> findFlightByDateAndAirport(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date, @PathVariable("airport") String airport){
-        return ResponseEntity.ok(flightMapper.toDto(flightService.findByDateAndAirport(date, airport)));
+        return flightService.findByDateAndAirport(date, airport);
     }
 
     //add new flight

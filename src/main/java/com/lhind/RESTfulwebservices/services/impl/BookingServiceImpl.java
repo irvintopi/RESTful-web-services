@@ -5,7 +5,9 @@ import com.lhind.RESTfulwebservices.dto.FlightDTO;
 import com.lhind.RESTfulwebservices.mapper.BookingMapper;
 import com.lhind.RESTfulwebservices.mapper.FlightMapper;
 import com.lhind.RESTfulwebservices.model.Booking;
+import com.lhind.RESTfulwebservices.model.Flight;
 import com.lhind.RESTfulwebservices.repository.BookingRepository;
+import com.lhind.RESTfulwebservices.repository.FlightRepository;
 import com.lhind.RESTfulwebservices.services.BookingService;
 import com.lhind.RESTfulwebservices.services.FlightService;
 import lombok.AllArgsConstructor;
@@ -25,6 +27,7 @@ public class BookingServiceImpl implements BookingService {
     private FlightService flightService;
     private FlightMapper flightMapper;
     private BookingMapper bookingMapper;
+    private FlightRepository flightRepository;
 
     @Override
     public Booking save(Booking booking) {
@@ -55,23 +58,16 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<Booking> findByFlightId(Integer flight_id) {
-        List<Booking> bookings = bookingRepository.findByFlightId(flight_id);
-        if (bookings.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+
+        List<Booking> bookings = bookingRepository.findByFlights(flightService.findById(flight_id).get());
         return bookings;
     }
     
     @Override
     public List<FlightDTO> findAllFlights(Integer id) {
-        List<Integer> flightIds = bookingRepository.findAllById(id);
-        List<FlightDTO> flights = new ArrayList<>();
 
-        for (Integer flightId : flightIds) {
-            flightService.findById(flightId).ifPresent(flight -> flights.add(flightMapper.toDto(flight)));
-        }
-
-        return flights;
+        List<Flight> flights = flightRepository.findFlightsByBookings(bookingRepository.findById(id).get());
+        return flights.stream().map(flightMapper::toDto).collect(Collectors.toList());
     }
 
 

@@ -6,6 +6,7 @@ import com.lhind.RESTfulwebservices.model.Flight;
 import com.lhind.RESTfulwebservices.repository.FlightRepository;
 import com.lhind.RESTfulwebservices.services.FlightService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -46,9 +47,10 @@ public class FlightServiceImpl implements FlightService {
     public void delete(Flight f) { flightRepository.delete(f); }
 
     @Override
-    public Flight findByDateAndAirport(Date date, String airport) {
-        Optional<Flight> flight = flightRepository.findById(flightRepository.findByDateAndAirport(date, airport));
-        return flight.orElse(null);
+    public ResponseEntity<FlightDTO> findByDateAndAirport(Date date, String airport) {
+        Flight flight = flightRepository.findByDepartureDateAndOrigin(date, airport);
+        if(flight == null) return ResponseEntity.notFound().build();
+        else return ResponseEntity.ok(flightMapper.toDto(flight));
     }
 }
 

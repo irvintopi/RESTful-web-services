@@ -17,7 +17,6 @@ public interface UserService {
     User findById(Integer id);
     List<UserDTO> findAll();
     void delete(User u);
-    UserDTO converter(User u);
     List<BookingDTO> findAllBookings(Integer id);
     BookingDTO findBookingByIdAndUser(Integer bookingId, Integer id);
 

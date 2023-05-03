@@ -7,6 +7,7 @@ import com.lhind.RESTfulwebservices.mapper.UserMapper;
 import com.lhind.RESTfulwebservices.model.Booking;
 import com.lhind.RESTfulwebservices.model.User;
 import com.lhind.RESTfulwebservices.model.UserDetails;
+import com.lhind.RESTfulwebservices.repository.BookingRepository;
 import com.lhind.RESTfulwebservices.repository.UserDetailsRepository;
 import com.lhind.RESTfulwebservices.repository.UserRepository;
 import com.lhind.RESTfulwebservices.services.BookingService;
@@ -29,6 +30,7 @@ public class UserServiceImpl implements UserService {
     private UserDetailsRepository userDetailsRepository;
     private UserMapper userMapper;
     private BookingMapper bookingMapper;
+    private BookingRepository bookingRepository;
 
 
     @Override
@@ -78,7 +80,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> findAll() {
-        return userRepository.findAll().stream().map(this::converter).collect(Collectors.toList());
+        return userRepository.findAll().stream().map(userMapper::toDto).collect(Collectors.toList());
     }
 
 
@@ -88,30 +90,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO converter(User u) {
-        if (u == null) {
-            return null;
-        }
-        return userMapper.toDto(u);
-    }
-    @Override
     public BookingDTO findBookingByIdAndUser(Integer bookingId, Integer id){
-        Optional<Booking> booking = bookingService.findById(userRepository.findBookingByIdAndUser(bookingId, id));
-        return booking.map(value -> bookingMapper.toDto(value)).orElse(null);
+        Booking booking = bookingRepository.findByIdAndUserId(bookingId, id);
+        return bookingMapper.toDto(booking);
+
     }
     @Override
     public List<BookingDTO> findAllBookings(Integer id) {
-        List<Integer> bookingIds = userRepository.findAllBookingsOfAUser(id);
-        List<BookingDTO> bookingDtoList = new ArrayList<>();
-        for (Integer i:bookingIds) {
-            Optional<Booking> bookingOptional = bookingService.findById(i);
 
-            if (bookingOptional.isPresent()) {
-                BookingDTO bookingDto = bookingMapper.toDto(bookingOptional.get());
-                bookingDtoList.add(bookingDto);
-            }
-        }
-        return bookingDtoList;
+        List<Booking> bookings = bookingRepository.findAllByUserId(id);
+        return bookings.stream().map(bookingMapper::toDto).collect(Collectors.toList());
     }
 
 

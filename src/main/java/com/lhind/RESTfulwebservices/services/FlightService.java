@@ -2,6 +2,7 @@ package com.lhind.RESTfulwebservices.services;
 
 import com.lhind.RESTfulwebservices.dto.FlightDTO;
 import com.lhind.RESTfulwebservices.model.Flight;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Date;
 import java.util.List;
@@ -12,5 +13,5 @@ public interface FlightService {
     Optional<Flight> findById(Integer id);
     List<FlightDTO> findAll();
     void delete(Flight f);
-    Flight findByDateAndAirport(Date date, String airport);
+    ResponseEntity<FlightDTO> findByDateAndAirport(Date date, String airport);
 }
