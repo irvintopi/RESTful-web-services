@@ -1,7 +1,7 @@
-package com.lhind.RESTfulwebservices.Controller;
+package com.lhind.RESTfulwebservices.controller;
 
-import com.lhind.RESTfulwebservices.dto.BookingDTO;
-import com.lhind.RESTfulwebservices.dto.FlightDTO;
+import com.lhind.RESTfulwebservices.model.dto.BookingDTO;
+import com.lhind.RESTfulwebservices.model.dto.FlightDTO;
 import com.lhind.RESTfulwebservices.mapper.BookingMapper;
 import com.lhind.RESTfulwebservices.model.Booking;
 import com.lhind.RESTfulwebservices.services.BookingService;

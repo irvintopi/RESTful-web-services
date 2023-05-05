@@ -1,7 +1,7 @@
 package com.lhind.RESTfulwebservices.services.impl;
 
-import com.lhind.RESTfulwebservices.dto.BookingDTO;
-import com.lhind.RESTfulwebservices.dto.FlightDTO;
+import com.lhind.RESTfulwebservices.model.dto.BookingDTO;
+import com.lhind.RESTfulwebservices.model.dto.FlightDTO;
 import com.lhind.RESTfulwebservices.mapper.BookingMapper;
 import com.lhind.RESTfulwebservices.mapper.FlightMapper;
 import com.lhind.RESTfulwebservices.model.Booking;
@@ -11,11 +11,8 @@ import com.lhind.RESTfulwebservices.repository.FlightRepository;
 import com.lhind.RESTfulwebservices.services.BookingService;
 import com.lhind.RESTfulwebservices.services.FlightService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

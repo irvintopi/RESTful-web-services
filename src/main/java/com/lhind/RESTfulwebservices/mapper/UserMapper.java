@@ -1,7 +1,7 @@
 package com.lhind.RESTfulwebservices.mapper;
 
 
-import com.lhind.RESTfulwebservices.dto.UserDTO;
+import com.lhind.RESTfulwebservices.model.dto.UserDTO;
 import com.lhind.RESTfulwebservices.model.User;
 import com.lhind.RESTfulwebservices.model.UserDetails;
 import org.springframework.stereotype.Component;
@@ -12,7 +12,7 @@ public class UserMapper extends AbstractMapper<User, UserDTO>{
     @Override
     public User toEntity(UserDTO userDTO) {
         User user = new User();
-        user.setUserName(userDTO.getUserName());
+        user.setUsername(userDTO.getUserName());
         user.setPassword("1234");
 
         UserDetails userDetails = new UserDetails();
@@ -31,7 +31,7 @@ public class UserMapper extends AbstractMapper<User, UserDTO>{
         if (u ==null){
             return null;
         }
-        UserDTO userDTO = new UserDTO(u.getUserName(), u.getUserDetails().getFirstName(), u.getUserDetails().getLastName(), u.getRole() , u.getUserDetails().getPhoneNumber(), u.getUserDetails().getEmail());
+        UserDTO userDTO = new UserDTO(u.getUsername(), u.getUserDetails().getFirstName(), u.getUserDetails().getLastName(), u.getRole() , u.getUserDetails().getPhoneNumber(), u.getUserDetails().getEmail());
         return userDTO;
     }
 }

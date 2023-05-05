@@ -1,7 +1,6 @@
-package com.lhind.RESTfulwebservices.dto;
+package com.lhind.RESTfulwebservices.model.dto;
 
 
-import com.lhind.RESTfulwebservices.model.Flight;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

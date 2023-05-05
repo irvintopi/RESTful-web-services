@@ -1,6 +1,6 @@
 package com.lhind.RESTfulwebservices.services.impl;
 
-import com.lhind.RESTfulwebservices.dto.FlightDTO;
+import com.lhind.RESTfulwebservices.model.dto.FlightDTO;
 import com.lhind.RESTfulwebservices.mapper.FlightMapper;
 import com.lhind.RESTfulwebservices.model.Flight;
 import com.lhind.RESTfulwebservices.repository.FlightRepository;

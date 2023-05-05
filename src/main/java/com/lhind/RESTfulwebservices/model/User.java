@@ -1,7 +1,6 @@
 package com.lhind.RESTfulwebservices.model;
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.util.List;
 
 @Entity
@@ -14,7 +13,7 @@ public class User {
     private Integer id;
 
     @Column(name = "user_name",unique = true)
-    private String userName;
+    private String username;
 
     @Column
     private String password;
@@ -27,4 +26,12 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Booking> bookings;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+    )
+    private List<Role> roles;
 }

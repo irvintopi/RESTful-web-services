@@ -1,10 +1,8 @@
 package com.lhind.RESTfulwebservices.services;
 
-import com.lhind.RESTfulwebservices.dto.BookingDTO;
-import com.lhind.RESTfulwebservices.dto.UserDTO;
-import com.lhind.RESTfulwebservices.model.Booking;
+import com.lhind.RESTfulwebservices.model.dto.BookingDTO;
+import com.lhind.RESTfulwebservices.model.dto.UserDTO;
 import com.lhind.RESTfulwebservices.model.User;
-import com.lhind.RESTfulwebservices.model.UserDetails;
 
 import java.util.List;
 

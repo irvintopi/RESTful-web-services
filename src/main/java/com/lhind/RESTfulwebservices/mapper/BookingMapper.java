@@ -1,8 +1,8 @@
 package com.lhind.RESTfulwebservices.mapper;
 
 
-import com.lhind.RESTfulwebservices.dto.BookingDTO;
-import com.lhind.RESTfulwebservices.dto.FlightDTO;
+import com.lhind.RESTfulwebservices.model.dto.BookingDTO;
+import com.lhind.RESTfulwebservices.model.dto.FlightDTO;
 import com.lhind.RESTfulwebservices.model.Booking;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -26,7 +26,7 @@ public class BookingMapper extends AbstractMapper<Booking, BookingDTO>{
     @Override
     public BookingDTO toDto(Booking booking) {
         BookingDTO bookingDTO = new BookingDTO();
-        bookingDTO.setUserName(booking.getUser().getUserName());
+        bookingDTO.setUserName(booking.getUser().getUsername());
         bookingDTO.setBookingDate(booking.getBookingDate());
         bookingDTO.setStatus(booking.getStatus());
         List<FlightDTO> flightDTOs = booking.getFlights().stream()

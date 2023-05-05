@@ -1,6 +1,6 @@
 package com.lhind.RESTfulwebservices.mapper;
 
-import com.lhind.RESTfulwebservices.dto.FlightDTO;
+import com.lhind.RESTfulwebservices.model.dto.FlightDTO;
 import com.lhind.RESTfulwebservices.model.Flight;
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,7 @@
 package com.lhind.RESTfulwebservices.services.impl;
 
-import com.lhind.RESTfulwebservices.dto.BookingDTO;
-import com.lhind.RESTfulwebservices.dto.UserDTO;
+import com.lhind.RESTfulwebservices.model.dto.BookingDTO;
+import com.lhind.RESTfulwebservices.model.dto.UserDTO;
 import com.lhind.RESTfulwebservices.mapper.BookingMapper;
 import com.lhind.RESTfulwebservices.mapper.UserMapper;
 import com.lhind.RESTfulwebservices.model.Booking;
