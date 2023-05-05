@@ -4,6 +4,7 @@ package com.lhind.RESTfulwebservices.mapper;
 import com.lhind.RESTfulwebservices.model.dto.UserDTO;
 import com.lhind.RESTfulwebservices.model.User;
 import com.lhind.RESTfulwebservices.model.UserDetails;
+import com.lhind.RESTfulwebservices.model.enums.RoleEnum;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,7 +23,7 @@ public class UserMapper extends AbstractMapper<User, UserDTO>{
         userDetails.setEmail(userDTO.getEmail());
 
         user.setUserDetails(userDetails);
-        user.setRole(userDTO.getRole());
+        user.setRole(RoleEnum.valueOf(userDTO.getRole()));
 
         return user;
     }
@@ -31,7 +32,6 @@ public class UserMapper extends AbstractMapper<User, UserDTO>{
         if (u ==null){
             return null;
         }
-        UserDTO userDTO = new UserDTO(u.getUsername(), u.getUserDetails().getFirstName(), u.getUserDetails().getLastName(), u.getRole() , u.getUserDetails().getPhoneNumber(), u.getUserDetails().getEmail());
-        return userDTO;
+        return new UserDTO(u.getUsername(), u.getUserDetails().getFirstName(), u.getUserDetails().getLastName(), u.getRole().name() , u.getUserDetails().getPhoneNumber(), u.getUserDetails().getEmail());
     }
 }

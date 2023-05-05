@@ -14,6 +14,7 @@ import com.lhind.RESTfulwebservices.services.BookingService;
 import com.lhind.RESTfulwebservices.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,8 +33,26 @@ public class UserServiceImpl implements UserService {
     private BookingMapper bookingMapper;
     private BookingRepository bookingRepository;
 
-
     @Override
+    public User save(User user) {
+        User user1 = new User();
+        BeanUtils.copyProperties(user, user1);
+
+        UserDetails userDetails = new UserDetails();
+        BeanUtils.copyProperties(user.getUserDetails(), userDetails, "userDetails");
+        userDetails.setUser(user1);
+
+        // Hash the user's password using bcrypt
+        String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
+        user1.setPassword(encodedPassword);
+
+        user1.setUserDetails(userDetails);
+        userRepository.save(user1);
+        userDetailsRepository.save(userDetails);
+
+        return user1;
+    }
+    /*@Override
     public User save(User user) {
         User user1 = new User();
         BeanUtils.copyProperties(user, user1);
@@ -48,7 +67,7 @@ public class UserServiceImpl implements UserService {
 
         return user1;
     }
-
+*/
     @Override
     public User update(Integer id, User updatedUser) {
         return userRepository.findById(id)

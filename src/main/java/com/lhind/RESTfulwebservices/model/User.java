@@ -1,6 +1,8 @@
 package com.lhind.RESTfulwebservices.model;
+import com.lhind.RESTfulwebservices.model.enums.RoleEnum;
 import jakarta.persistence.*;
 import lombok.Data;
+
 import java.util.List;
 
 @Entity
@@ -19,19 +21,12 @@ public class User {
     private String password;
 
     @Column
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private RoleEnum role;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private UserDetails userDetails;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Booking> bookings;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
-    )
-    private List<Role> roles;
 }
