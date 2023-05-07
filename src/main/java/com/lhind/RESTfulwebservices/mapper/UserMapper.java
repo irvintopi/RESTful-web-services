@@ -13,7 +13,7 @@ public class UserMapper extends AbstractMapper<User, UserDTO>{
     @Override
     public User toEntity(UserDTO userDTO) {
         User user = new User();
-        user.setUsername(userDTO.getUserName());
+        user.setUsername(userDTO.getUsername());
         user.setPassword("1234");
 
         UserDetails userDetails = new UserDetails();

@@ -14,6 +14,9 @@ import com.lhind.RESTfulwebservices.services.BookingService;
 import com.lhind.RESTfulwebservices.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -52,27 +55,12 @@ public class UserServiceImpl implements UserService {
 
         return user1;
     }
-    /*@Override
-    public User save(User user) {
-        User user1 = new User();
-        BeanUtils.copyProperties(user, user1);
 
-        UserDetails userDetails = new UserDetails();
-        BeanUtils.copyProperties(user.getUserDetails(), userDetails, "userDetails");
-        userDetails.setUser(user1);
-
-        user1.setUserDetails(userDetails);
-        userRepository.save(user1);
-        userDetailsRepository.save(userDetails);
-
-        return user1;
-    }
-*/
     @Override
     public User update(Integer id, User updatedUser) {
         return userRepository.findById(id)
                 .map(user -> {
-                    BeanUtils.copyProperties(updatedUser, user,"id", "userDetails");
+                    BeanUtils.copyProperties(updatedUser, user, "id", "userDetails");
                     BeanUtils.copyProperties(updatedUser.getUserDetails(), user.getUserDetails());
                     user.getUserDetails().setUser(user);
 
@@ -80,6 +68,7 @@ public class UserServiceImpl implements UserService {
                 })
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
+
     @Override
     public List<UserDTO> findUsersOnFlight(Integer flightId) {
         List<Booking> bookings = bookingService.findByFlightId(flightId);
@@ -91,11 +80,19 @@ public class UserServiceImpl implements UserService {
         }
         return userDTOs;
     }
+
     @Override
-    public User findById(Integer id) {
-        Optional <User> user = userRepository.findById(id);
-        return user.orElse(null);
+    public UserDTO findById(Integer id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<User> authenticatedUser = userRepository.findByUsername(authentication.getName());
+
+        if (authenticatedUser.isPresent() && (authenticatedUser.get().getId().equals(id) || authentication.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN")))) {
+            return userMapper.toDto(userRepository.findById(id).get());
+        }
+
+        return null;
     }
+
 
     @Override
     public List<UserDTO> findAll() {
@@ -104,24 +101,21 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void delete(User u) {
-        userRepository.delete(u);
+    public void delete(Integer u) {
+        userRepository.delete(userRepository.findById(u).get());
     }
 
     @Override
-    public BookingDTO findBookingByIdAndUser(Integer bookingId, Integer id){
+    public BookingDTO findBookingByIdAndUser(Integer bookingId, Integer id) {
         Booking booking = bookingRepository.findByIdAndUserId(bookingId, id);
         return bookingMapper.toDto(booking);
 
     }
+
     @Override
     public List<BookingDTO> findAllBookings(Integer id) {
 
         List<Booking> bookings = bookingRepository.findAllByUserId(id);
         return bookings.stream().map(bookingMapper::toDto).collect(Collectors.toList());
     }
-
-
-
-
 }

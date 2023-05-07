@@ -11,12 +11,9 @@ public interface UserService {
     User update(Integer id, User updatedUser);
 
     List<UserDTO> findUsersOnFlight(Integer flightId);
-
-    User findById(Integer id);
     List<UserDTO> findAll();
-    void delete(User u);
+    void delete(Integer id);
     List<BookingDTO> findAllBookings(Integer id);
     BookingDTO findBookingByIdAndUser(Integer bookingId, Integer id);
-
-
+    UserDTO findById(Integer id);
 }
