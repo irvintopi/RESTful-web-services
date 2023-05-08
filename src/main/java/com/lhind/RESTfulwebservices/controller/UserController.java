@@ -35,7 +35,6 @@ public class UserController {
     }
 
     //get user and details by id
-
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable("id") Integer id) {
         UserDTO user = userService.findById(id);
